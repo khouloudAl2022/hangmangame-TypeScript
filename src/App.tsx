@@ -28,7 +28,9 @@ function App() {
       </div>
       <HangmanDrawing />
       <HangmanWord />
-      <Keyboard />
+      <div style={{ alignSelf: "stretch" }}>{/*Stretch the item to fill the vertical space*/}
+        <Keyboard />
+      </div>
     </div>
   )
 }

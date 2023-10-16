@@ -1,0 +1,23 @@
+.btn{
+    width:100%;
+    border:3px solid black;
+    aspect-ratio: 1/1;
+/*  aspect ratio specifies a square aspect ratio, where the width and height are equal */
+font-size: 2.5rem;
+text-transform: uppercase;;
+padding:.5rem;
+/*.5rem means "half of a rem unit."*/
+font-weight: bold;
+cursor: pointer;
+}
+.btn:hover:not(:disabled),
+.btn:focus:not(:disabled){
+background-color: aquamarine;
+}
+.btn.active{
+background-color: aqua;
+color:white;
+}
+.btn.inactive{
+   opacity: .4; 
+}

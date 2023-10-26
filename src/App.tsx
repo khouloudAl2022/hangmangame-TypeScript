@@ -15,6 +15,27 @@ function App() {
 
   const incorrectLetters = guessedLetters.filter(letter => !wordToGuess.includes(letter))
 
+
+  const addGuessedLetter = (letter: string) => {
+    if (guessedLetters.includes(letter)) return
+    setGuessedLetters(currentletters => [...currentletters, letter])
+  }
+
+
+  // useEffect for handling keyboard event to get the guessedLetters
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const key = e.key
+      if (!key.match(/^[a-z]$/)) return
+      e.preventDefault()
+      addGuessedLetter(key)
+    }
+    document.addEventListener("keypress", handler)
+    return () => {
+      document.removeEventListener("keypress", handler)
+    }
+  }, [])
+
   return (
     <div style={{
       maxWidth: "800px",

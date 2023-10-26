@@ -60,7 +60,6 @@ const LEFT_LEG = (
         transformOrigin: "right bottom"
     }} />
 )
-
 const RIGHT_LEG = (
     <div style={{
         width: "100px",
@@ -73,17 +72,17 @@ const RIGHT_LEG = (
         transformOrigin: " left bottom"
     }} />
 )
+const BODY_PARTS = [HEAD, BODY, RIGHT_ARM, LEFT_ARM, RIGHT_LEG, LEFT_LEG]
 
+type HangmanDrawingProps = {
+    numberOfGuesses: number
+}
 
-const HangmanDrawing = () => {
+const HangmanDrawing = ({ numberOfGuesses }: HangmanDrawingProps) => {
     return (
         <div style={{ position: "relative" }}>
-            {HEAD}
-            {BODY}
-            {RIGHT_ARM}
-            {LEFT_ARM}
-            {RIGHT_LEG}
-            {LEFT_LEG}
+            {BODY_PARTS.slice(0,numberOfGuesses)}
+
             <div style={{ width: "10px", height: "50px", backgroundColor: "black", top: 0, right: 0, position: "absolute" }} />
             <div style={{ width: "200px", height: "10px", backgroundColor: "black", marginLeft: "120px" }} />
             <div style={{ height: "400px", background: "black", width: "10px", marginLeft: "120px" }} />

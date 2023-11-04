@@ -9,20 +9,25 @@ function App() {
   const [wordToGuess, setWordToGuess] = useState(() => {
     return wordList[Math.floor(Math.random() * wordList.length)]
   })
-
   const [guessedLetters, setGuessedLetters] = useState<string[]>([])
 
   const incorrectLetters = guessedLetters.filter(letter => !wordToGuess.includes(letter))
-
+  console.log("incoreeeeeeeeeeeeect", incorrectLetters)
   console.log("hhhhhhhhhhhhhhhhhhh", guessedLetters)
 
-  const addGuessedLetter = useCallback((letter: string) => {
-    if (guessedLetters.includes(letter)) return
 
+  // check if user lose or win 
+  const isLoser = incorrectLetters.length >= 6
+  const isWinner = wordToGuess.split("").every(letter => guessedLetters.includes(letter))
+
+
+
+  const addGuessedLetter = useCallback((letter: string) => {
+    if (guessedLetters.includes(letter) || isLoser || isWinner) return
     {/****currentletters***:you're using the functional update form of setState. 
   This pattern is often used to update a state variable based on its current value*/ }
     setGuessedLetters(currentletters => [...currentletters, letter]); {/*Managing the list of guessed letters and updating the game state*/ }
-  }, [guessedLetters])
+  }, [guessedLetters, isLoser, isWinner])
 
 
 
@@ -32,6 +37,7 @@ function App() {
     console.log("wordtoguess", wordToGuess)
     const handler = (e: KeyboardEvent) => {
       const key = e.key
+      console.log("key khulud", key)
       if (!key.match(/^[a-z]$/)) return {/* Preventing non-alphabet characters from being processed*/ }
       e.preventDefault()
       addGuessedLetter(key)
@@ -52,12 +58,16 @@ function App() {
       alignItems: "center"
     }}>
       <div style={{ fontSize: "2rem", textAlign: "center" }}>
-        Lose - Win
+        {isLoser && "Nice Try - Refresh to try again "}
+        {isWinner && "Winner - Refresh to try again"}
+
+
+
       </div>
       <HangmanDrawing numberOfGuesses={incorrectLetters.length} />
       <HangmanWord guessedLetters={guessedLetters} wordToGuess={wordToGuess} />
       <div style={{ alignSelf: "stretch" }}>{/*Stretch the item to fill the vertical space*/}
-        <Keyboard activeLetters={guessedLetters.filter(letter => wordToGuess.includes(letter))} inactiveLetters={incorrectLetters} addGuessedLetter={addGuessedLetter} />
+        <Keyboard disabled={isWinner || isLoser} activeLetters={guessedLetters.filter(letter => wordToGuess.includes(letter))} inactiveLetters={incorrectLetters} addGuessedLetter={addGuessedLetter} />
       </div>
     </div>
   )

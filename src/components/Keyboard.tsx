@@ -1,38 +1,64 @@
 import styles from "./keyboard.module.css"
 
-const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-    "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
-];
+const alphabet = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+]
 
 
-type KeyBoardProps = {
+
+type KeyboardProps = {
+    disabled?: boolean
     activeLetters: string[]
     inactiveLetters: string[]
     addGuessedLetter: (letter: string) => void
 }
 
-const Keyboard = ({ activeLetters, inactiveLetters, addGuessedLetter }: KeyBoardProps) => {
+const Keyboard = ({ activeLetters, inactiveLetters, addGuessedLetter, disabled = false }: KeyboardProps) => {
     return (
         <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit,minmax(75px,1fr)",
+            gridTemplateColumns: "repeat(auto-fit,minmax(75px , 1fr))",
             gap: ".5rem"
         }}>
-            {alphabet.map((key) => {
+            {alphabet.map(key => {
                 const isActive = activeLetters.includes(key)
                 const isInactive = inactiveLetters.includes(key)
                 return (
-                    <button 
-                    onClick={() => addGuessedLetter(key)} 
-                    className={`${styles.btn}
-                          ${isActive ? styles.active : ""}
-                          ${isInactive ? styles.inactive : ""}`}
+                    <button
+                        onClick={() => addGuessedLetter(key)}
+                        className={`${styles.btn} ${isActive ? styles.active : ""} ${isInactive ? styles.inactive : ""
+                            }`}
+                        disabled={isInactive || isActive || disabled}
                         key={key}
                     >
                         {key}
                     </button>
                 )
-
             })}
 
 
